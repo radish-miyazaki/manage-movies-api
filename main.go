@@ -24,6 +24,9 @@ type config struct {
 		// data source name (ex. database_name, user_name etc...)
 		dsn string
 	}
+	jwt struct {
+		secret string
+	}
 }
 
 // application ... application log & configuration
@@ -46,6 +49,7 @@ func main() {
 	flag.IntVar(&cfg.port, "port", 4000, "Server port to listen on")
 	flag.StringVar(&cfg.env, "env", "development", "Application environment (development|production)")
 	flag.StringVar(&cfg.db.dsn, "dsn", "postgres://postgres@localhost/manage_movies?sslmode=disable", "Postgres connection starting")
+	flag.StringVar(&cfg.jwt.secret, "jwt-secret", "2dce505d96a53c5768052ee90f3df2055657518dad489160df9913f66042e160", "secret")
 	flag.Parse()
 
 	// コマンドライン出力用ログを作成する
