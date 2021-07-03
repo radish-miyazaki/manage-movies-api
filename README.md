@@ -8,3 +8,5 @@
 ### 利用したライブラリ
 - httprouter（ルーティング）
 - pq（postgresのDBドライバ）
+- crypto(パスワードハッシュ化用ライブラリ)
+- jwt(JSON Web Tokens用ライブラリ)
