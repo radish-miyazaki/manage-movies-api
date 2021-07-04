@@ -29,6 +29,8 @@ func (app *application) checkToken(next http.Handler) http.Handler {
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
 			// could set an anonymous user
+			app.errorJSON(w, errors.New("unauhtorization"))
+			return
 		}
 
 		headerParts := strings.Split(authHeader, " ")
@@ -79,7 +81,7 @@ func (app *application) checkToken(next http.Handler) http.Handler {
 			return
 		}
 
-		log.Println(userID)
+		log.Println("UserID is " + strconv.Itoa(int(userID)))
 
 		// 次のHandlerにチェーンする
 		next.ServeHTTP(w, r)
