@@ -32,14 +32,22 @@ func (app *application) Login(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&cs)
 	if err != nil {
 		app.errorJSON(w, errors.New("unauthorized"))
+		return
 	}
 
 	hashedPassword := validUser.Password
+
+	// メールアドレスチェック
+	if cs.UserName != validUser.Email {
+		app.errorJSON(w, errors.New("unauthorized"))
+		return
+	}
 
 	// リクエストのパスワードとDBで保管しているハッシュ化したパスワードを比較
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(cs.Password))
 	if err != nil {
 		app.errorJSON(w, errors.New("unauthorized"))
+		return
 	}
 
 	// jwtのユーザー情報であるclaimsを作成
@@ -55,8 +63,12 @@ func (app *application) Login(w http.ResponseWriter, r *http.Request) {
 	jwtBytes, err := claims.HMACSign(jwt.HS256, []byte(app.config.jwt.secret))
 	if err != nil {
 		app.errorJSON(w, errors.New("error login"))
+		return
 	}
 
 	// 暗号化したtokenをレスポンスに付与
-	app.writeJSON(w, http.StatusOK, jwtBytes, "response")
+	if err = app.writeJSON(w, http.StatusOK, string(jwtBytes), "response"); err != nil {
+		app.errorJSON(w, errors.New("error login"))
+		return
+	}
 }
