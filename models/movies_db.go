@@ -138,7 +138,8 @@ func (m *DBModel) InsertMovie(movie Movie) error {
 		movie.Rating,
 		movie.MPAARating,
 		movie.CreatedAt,
-		movie.UpdatedAt)
+		movie.UpdatedAt,
+	)
 
 	if err != nil {
 		return err
@@ -163,7 +164,8 @@ func (m *DBModel) UpdateMovie(movie Movie) error {
 		movie.Rating,
 		movie.MPAARating,
 		movie.UpdatedAt,
-		movie.ID)
+		movie.ID,
+	)
 
 	if err != nil {
 		return err

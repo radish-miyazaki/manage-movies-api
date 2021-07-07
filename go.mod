@@ -3,6 +3,7 @@ module github.com/radish-miyazaki/manage-movies-api
 go 1.15
 
 require (
+	github.com/graphql-go/graphql v0.7.9 // indirect
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/justinas/alice v1.2.0 // indirect
 	github.com/lib/pq v1.10.2

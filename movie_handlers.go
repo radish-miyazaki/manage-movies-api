@@ -157,5 +157,3 @@ func (app *application) deleteMovie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-
-func (app *application) searchMovie(w http.ResponseWriter, r *http.Request) {}
